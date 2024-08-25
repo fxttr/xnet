@@ -1,9 +1,9 @@
-module Data.Neuron (relu, relu', sigmoid, sigmoid', reluNeuron, sigmoidNeuron, Neuron(..)) where
-    
+module Data.Neuron (relu, relu', sigmoid, sigmoid', activateNeuron, Neuron(..)) where
+
 import Prelude hiding (exp)
 import GHC.Float (exp)
 
-data Neuron = Neuron { weights :: [Double], bias :: Double } deriving Show
+data Neuron = Neuron { weights :: [Double], bias :: Double, activationFunction :: Double -> Double }
 
 relu :: Double -> Double
 relu = max 0
@@ -17,8 +17,5 @@ sigmoid x = 1 / (1 + exp (-x))
 sigmoid' :: Double -> Double
 sigmoid' x = let s = sigmoid x in s * (1 - s)
 
-reluNeuron :: Neuron -> [Double] -> Double
-reluNeuron (Neuron ws b) inputs = relu (sum (zipWith (*) ws inputs) + b)
-
-sigmoidNeuron :: Neuron -> [Double] -> Double
-sigmoidNeuron (Neuron ws b) inputs = relu (sum (zipWith (*) ws inputs) + b)
+activateNeuron :: Neuron ->  [Double] -> Double
+activateNeuron (Neuron ws b f) inputs = f (sum (zipWith (*) ws inputs) + b)

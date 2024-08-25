@@ -9,11 +9,11 @@ import System.Random
 randomList :: Int -> IO [Double]
 randomList n = replicateM n (randomRIO (-1, 1))
 
-initNeuron :: Int -> IO Neuron
-initNeuron numInputs = do
+initNeuron :: Int -> (Double -> Double) -> IO Neuron
+initNeuron numInputs f = do
     ws <- randomList numInputs
     b <- randomRIO (-1, 1)
-    return $ Neuron ws b
+    return $ Neuron ws b f
 
-initLayer :: Int -> Int -> IO Layer
-initLayer numInputs numNeurons = Layer <$> replicateM numNeurons (initNeuron numInputs)
+initLayer :: Int -> Int -> (Double -> Double) -> IO Layer
+initLayer numInputs numNeurons f = Layer <$> replicateM numNeurons (initNeuron numInputs f)

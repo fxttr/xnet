@@ -1,8 +1,8 @@
-module Data.Layer (Layer(..), layer) where
+module Data.Layer (Layer(..), fwlayer) where
 
-import Data.Neuron ( Neuron, reluNeuron )
+import Data.Neuron ( Neuron, activateNeuron )
 
 newtype Layer = Layer { neurons :: [Neuron] }
 
-layer :: Layer -> [Double] -> [Double]
-layer (Layer ns) inputs = map (`reluNeuron` inputs) ns
+fwlayer :: Layer -> [Double] -> [Double]
+fwlayer (Layer ns) inputs = map (`activateNeuron` inputs) ns

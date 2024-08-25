@@ -1,8 +1,8 @@
-module Data.Network (Network(..), network) where
+module Data.Network (Network(..), fwnetwork) where
 
-import Data.Layer ( Layer(..), layer )
+import Data.Layer ( Layer(..), fwlayer )
 
 newtype Network = Network { layers :: [Layer] }
 
-network :: Network -> [Double] -> [Double]
-network (Network ls) inputs = foldl (flip layer) inputs ls
+fwnetwork :: Network -> [Double] -> [Double]
+fwnetwork (Network ls) inputs = foldl (flip fwlayer) inputs ls
